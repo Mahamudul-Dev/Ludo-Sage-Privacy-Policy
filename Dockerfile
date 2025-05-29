@@ -1,11 +1,12 @@
-# Use a lightweight Nginx image
-FROM nginx:alpine
+FROM node:18-alpine
 
-# Remove default Nginx static content
-RUN rm -rf /usr/share/nginx/html/*
+WORKDIR /app
 
-# Copy our custom static site
-COPY . /usr/share/nginx/html
+COPY package*.json ./
+RUN npm install
 
-# Expose the default Nginx port
-EXPOSE 80
+COPY . .
+
+EXPOSE 3000
+
+CMD ["node", "app.js"]
